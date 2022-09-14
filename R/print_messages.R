@@ -15,69 +15,70 @@
 
 # newest function as of September 14, 2022
 
-print_data <- function(x,att1=NULL, att2 = NULL,
-                           text=NULL, keywords=NULL,
-                           highlight=NULL,
-                           highlight_style = "stem") {
-
-#  print("---------------------------TEST HERE")
-#  print(x %>% dplyr::select({{text}}))
-#  print("----------------------------TEST ENDS")
-
-# Different Topics --------------------------------------------------------
- require(stringr)
- require(glue)
- require(dplyr)
-
+print_messages <- function(x,att1=NULL, att2 = NULL, 
+                           text=NULL, keywords=NULL, 
+                           highlight=NULL, 
+                           highlight_style = "stem", 
+                           filename="out.html") {
+  
+  #  print("---------------------------TEST HERE")
+  #  print(x %>% dplyr::select({{text}}))
+  #  print("----------------------------TEST ENDS")
+  
+  # Different Topics --------------------------------------------------------
+  require(stringr)
+  require(glue)
+  require(dplyr)
+  
   # Validate inputs
   if(is.null(att1)) {
     att1_glue <- ""
   } else {
     att1_glue <- paste0("{", att1,"}")
   }
-
+  
   if(is.null(att2)) {
     att2_glue <- ""
   } else {
     att2_glue <- paste0("{",att2,"}")
   }
-
-
+  
+  
   # highlight the text
-
-
+  
+  
   if (is.null(highlight)) {
-
+    
   } else {
-
-
+    
+    
     #replace the  words
     if (highlight_style == "stem") {
-    pattern <- paste0("((",highlight,")\\w+)")
-
+      pattern <- paste0("((",highlight,")\\w+)")
+      
     } else if (highlight_style == "regex") {
       pattern <- paste0( "(",highlight, ")") # put in parentheses to create a capture group that can then be referenced using backreference \\1
     }
-    x$text <- stringr::str_replace_all(x$text,
-                             pattern=regex(pattern),
-                             replacement = "<mark>\\1 </mark>")
-
-    }
-
-
-
-
-
+    x$text <- stringr::str_replace_all(x$text, 
+                                       pattern=regex(pattern), 
+                                       replacement = "<mark>\\1 </mark>")
+    
+  }
+  
+  
+  
+  
+  
   head_html <- "<!DOCTYPE html>
 <html>
 <head>
 <link rel=\"stylesheet\"href=\"print.css\" type=\"text/css\">
 <title>title</title>
 <body>"
-
-foot_html <- "</body></html>"
-
-
+  
+  foot_html <- "</body></html>"
+  
+  
   pattern <-   paste("<div class=\"row\">
 
    <div class=\"column left\">
@@ -88,45 +89,45 @@ foot_html <- "</body></html>"
   </div>
     <div class=\"column right\">
     	<div class=\"description-content\">
-
+			
  {", deparse(substitute(text)),"}
 </div>
 	</div>
 </div>
-")
-
-
-
+")        
+  
+  
+  
   if(is.null(keywords)) {
- # print all messages
+    # print all messages
     messages_html <- glue_data(x, pattern)
-
-  }
-
-  # if keywords are passed, filter dataset and change layout to
+    
+  } 
+  
+  # if keywords are passed, filter dataset and change layout to 
   # highlight
-
-
+  
+  
   else {
     messages_html = ""
     keywords = c(keywords)
-
+    
     for (i in 1:length(keywords) ) {
-      message_text<- x %>% dplyr::filter(str_detect({{ text }},
-                                             fixed(keywords[i],
-                                                   ignore_case=T))) %>%
-        glue_data(pattern)
+      message_text<- x %>% dplyr::filter(str_detect({{ text }}, 
+                                                    fixed(keywords[i], 
+                                                          ignore_case=T))) %>%
+        glue_data(pattern) 
       messages_html <- paste0(messages_html, "<h1>", keywords[i], "</h1>",
-                          paste(message_text, sep=" ", collapse="") ,
-                          "<hr>"
+                              paste(message_text, sep=" ", collapse="") ,
+                              "<hr>"
       )
     }
   }
-
+  
+  filename <- filename
+  
   page <- paste0(head_html, messages_html, foot_html)
   #write(page, outfile)
-  write(page, "messages_topic.html")
-  browseURL("messages_topic.html")
+  write(page, filename)
+  browseURL(filename)
 }
-
-
