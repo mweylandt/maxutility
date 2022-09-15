@@ -10,16 +10,19 @@
 #' @param highlight a regex string to be highlighted
 #' @param highlight_style Interpret regex directly or, if "stem" is specified,
 #'        highlight whole words beginning with the stem specified
+#' @param highlight_caseignore Ignore case of highlight? default set to TRUE
+#' @param filename specify an output filename. must include.html ending
 #' print_data()
 
 
 # newest function as of September 14, 2022
 
-print_data <- function(x,att1=NULL, att2 = NULL,
-                           text=NULL, keywords=NULL,
-                           highlight=NULL,
-                           highlight_style = "stem",
-                           filename="out.html") {
+print_data  <- function(x,att1=NULL, att2 = NULL,
+                          text=NULL, keywords=NULL,
+                          highlight=NULL,
+                          highlight_style = "stem",
+                          highlight_caseignore = TRUE,
+                          filename="out.html") {
 
   #  print("---------------------------TEST HERE")
   #  print(x %>% dplyr::select({{text}}))
@@ -60,7 +63,7 @@ print_data <- function(x,att1=NULL, att2 = NULL,
       pattern <- paste0( "(",highlight, ")") # put in parentheses to create a capture group that can then be referenced using backreference \\1
     }
     x$text <- stringr::str_replace_all(x$text,
-                                       pattern=regex(pattern),
+                                       pattern=regex(pattern, ignore_case = highlight_caseignore),
                                        replacement = "<mark>\\1 </mark>")
 
   }
@@ -115,7 +118,7 @@ print_data <- function(x,att1=NULL, att2 = NULL,
     for (i in 1:length(keywords) ) {
       message_text<- x %>% dplyr::filter(str_detect({{ text }},
                                                     fixed(keywords[i],
-                                                          ignore_case=T))) %>%
+                                                          ignore_case=TRUE))) %>%
         glue_data(pattern)
       messages_html <- paste0(messages_html, "<h1>", keywords[i], "</h1>",
                               paste(message_text, sep=" ", collapse="") ,
@@ -131,3 +134,5 @@ print_data <- function(x,att1=NULL, att2 = NULL,
   write(page, filename)
   browseURL(filename)
 }
+
+

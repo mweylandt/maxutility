@@ -13,6 +13,7 @@ print_data(
   keywords = NULL,
   highlight = NULL,
   highlight_style = "stem",
+  highlight_caseignore = TRUE,
   filename = "out.html"
 )
 }
@@ -30,7 +31,11 @@ file into sections}
 \item{highlight}{a regex string to be highlighted}
 
 \item{highlight_style}{Interpret regex directly or, if "stem" is specified,
-highlight whole words beginning with the stem specified
+highlight whole words beginning with the stem specified}
+
+\item{highlight_caseignore}{Ignore case of highlight? default set to TRUE}
+
+\item{filename}{specify an output filename. must include.html ending
 print_data()}
 }
 \description{
