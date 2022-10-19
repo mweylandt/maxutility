@@ -2,3 +2,4 @@
 
 export(add_textcounts)
 export(print_data)
+export(reverse)
