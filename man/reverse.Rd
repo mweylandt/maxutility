@@ -4,15 +4,27 @@
 \alias{reverse}
 \title{Reverse codings of items (such as in a survey)}
 \usage{
-reverse(x)
+reverse(x, min = NULL, max = NULL)
 }
 \description{
 Reverse codings of items (such as in a survey)
 }
 \examples{
+test <- c(1,NA,3)
+reverse(test, min=1, max=3)
+
+test2 <- c(1,2,3,4)
+reverse(test2, min=1, max=4)
+
+test3 <- c(0,1,2)
+reverse(test3, min=0, max=2)
+
+test4 <- c(-1,0,1,2,3)
+reverse(test4, min=-1, max=3)
 ideology <-  c(1, 4, 4, 5, 2, 2, 2, 4, 4, 6, 2, 4, 5, 7, 4, 1, 2, 3, 2, 3, 8)
 reverse(ideology)
 library(dplyr)
+ideology <-  c(1, 4, 4, 5, 2, 2, 2, 4, 4, 6, 2, 4, 5, 7, 4, 1, 2, 3, 2, 3)
 df <- data.frame(id = seq(1:length(ideology)),ideology )
-df \%>\% mutate(ideology_r = reverse(ideology))
+df \%>\% mutate(ideology_r = reverse(ideology, min=1, max=7))
 }
