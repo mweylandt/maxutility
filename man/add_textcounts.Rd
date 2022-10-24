@@ -7,15 +7,16 @@
 add_textcounts(x, text_col, word = TRUE, char = TRUE)
 }
 \arguments{
-\item{highlight}{a regex string to be highlighted}
+\item{text_col}{which column contains text to be counted}
 
-\item{highlight_style}{Interpret regex directly or, if "stem" is specified,
-highlight whole words beginning with the stem specified}
+\item{word}{add wordcount}
+
+\item{char}{add character count}
 }
 \description{
 Add wordcount and character count to dataframe
 }
 \examples{
-testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice pero la pobreza no es bueno", "democratic movements happen en la realidad"))
+testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
 add_textcounts(testdf, text=text)
 }
