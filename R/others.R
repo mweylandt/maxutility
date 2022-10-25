@@ -1,11 +1,11 @@
 #' Add wordcount and character count to dataframe
 #' @export
 #' @name add_textcounts
-#' @param highlight a regex string to be highlighted
-#' @param highlight_style Interpret regex directly or, if "stem" is specified,
-#'        highlight whole words beginning with the stem specified
+#' @param text_col which column contains text to be counted
+#' @param word add wordcount
+#' @param char add character count
 #' @examples
-#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice pero la pobreza no es bueno", "democratic movements happen en la realidad"))
+#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
 #' add_textcounts(testdf, text=text)
 
 
@@ -26,6 +26,59 @@ add_textcounts <- function (x, text_col, word = TRUE, char = TRUE) {
 
   return(x)
 }
+
+
+#' Returns a vector of wordcounts
+#' @export
+#' @name get_wordcount
+#' @param text_col text column to be counted
+#' @examples
+#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
+#' get_wordcount(testdf, text=text)
+
+
+get_wordcount <- function(x, text_col) {
+  require(dplyr)
+  require(stringr)
+  column_name = enquo(text_col)
+
+
+    wordcount <- x %>%
+      summarize(wordcount = str_count( string= !!column_name, pattern = "\\W+")) %>%
+      pull(wordcount)
+
+
+
+
+  return(wordcount)
+}
+
+
+#' Returns a vector of character counts
+#' @export
+#' @name get_charcount
+#' @param text_col text column to be counted
+#' @examples
+#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
+#' get_wordcount(testdf, text=text)
+
+get_charcount <- function(x, text_col) {
+  require(dplyr)
+  require(stringr)
+  column_name = enquo(text_col)
+
+
+    charcount <- x %>%
+      summarize(character_count =   str_count(string= !!column_name, pattern = ""))%>%
+      pull(character_count)
+
+
+  return(character_count)
+}
+
+
+# Reverse -----------------------------------------------------------------
+
 
 
 #' Reverse codings of items (such as in a survey)

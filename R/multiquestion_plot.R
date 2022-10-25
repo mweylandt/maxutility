@@ -30,8 +30,8 @@ multiquestion_plot <- function(x, vars = NULL,
   }
 
   # get min and max
-  x_min <- x %>% select(all_of(var_names)) %>% min()
-  x_max <- x %>% select(all_of(var_names)) %>% max()
+  x_min <- x %>% select(all_of(var_names)) %>% min(na.rm=TRUE)
+  x_max <- x %>% select(all_of(var_names)) %>% max(na.rm=TRUE)
 
 
 

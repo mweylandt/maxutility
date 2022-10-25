@@ -1,0 +1,122 @@
+
+
+
+/*@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Arapey:ital@1&display=swap'); */
+
+
+.title{
+	font-family:'Arapey', serif;
+	font-size: 24px;
+	font-weight: 400;
+	font-style: italic;
+}
+ 
+body {
+  font-family:  sans-serif;
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: 400;
+  line-height: 1.58;
+  letter-spacing: -.003em;
+  font-size: 12px;
+}
+
+p {
+  border-bottom: 1px dotted gray;
+}
+
+h1 {
+  font-family: sans-serif;
+  font-weight: 700;
+  font-style: bold;
+  font-size: 38px;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  color: rgba(0, 0, 0, 0.8);
+  -webkit-font-smoothing: antialiased;
+}
+
+ul {
+  line-height: 110%;
+  list-style-type: none;
+}
+
+/* Create two unequal columns that floats next to each other */
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+    border-bottom: 1px dotted darkgray;
+
+}
+
+
+.column {
+  float: left;
+  
+}
+
+.left {
+height: 99%; /* at 100% it disappears!*/
+width: 20%;
+/* border: 1px solid red; /*for some godforsaken reason it goes to the next page without this */
+/*overflow: hidden; /*ensures that the image doesn't overflow div and clash with the text description */
+/*Now taking it out seems to have helped - in conjunction with setting the column containing this stuff to width100 */
+
+}
+.right {
+  height: 99%;
+  width:  80%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1cm;
+  /*border: 1px solid purple;*/
+}
+
+
+.description-content {
+  margin-top: auto;
+ /*  border: 1px solid orange;*/
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+ 
+ /*  border: 1px solid black;*/
+  
+}
+
+
+
+
+
+@page {
+	size: A4 portrait;
+  margin: 1cm;
+  margin-bottom: 0cm !important; /*helps with keeping info on page*/
+}
+
+    html, body {
+        height: 100%;
+        padding: 0;
+    }
+
+
+    a[href*='//']:after {
+        content:" (" attr(href) ") ";
+        color: $primary;
+     }
+
+p {
+  page-break-inside: avoid;
+}
+
+
+
+}
+

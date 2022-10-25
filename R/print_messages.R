@@ -72,10 +72,11 @@ print_data  <- function(x,att1=NULL, att2 = NULL,
 
 
 
-  head_html <- "<!DOCTYPE html>
+
+  head_html <-"<!DOCTYPE html>
 <html>
 <head>
-<link rel=\"stylesheet\"href=\"print.css\" type=\"text/css\">
+<link rel=\"stylesheet\"href=\"style.css\" type=\"text/css\">
 <title>title</title>
 <body>"
 
@@ -133,6 +134,10 @@ print_data  <- function(x,att1=NULL, att2 = NULL,
   #write(page, outfile)
   write(page, filename)
   browseURL(filename)
+
+  # copy css here
+  style.file <- system.file("css", "style.css", package = "maxutility")
+  file.copy(style.file, getwd())
 }
 
 
