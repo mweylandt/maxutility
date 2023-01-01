@@ -2,6 +2,7 @@
 
 export(add_textcounts)
 export(get_charcount)
+export(get_infrequent_terms)
 export(get_wordcount)
 export(meanRootPairs)
 export(multiquestion_plot)
