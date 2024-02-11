@@ -16,7 +16,8 @@ add_textcounts <- function (x, text_col, word = TRUE, char = TRUE) {
   require(dplyr)
   require(stringr)
 
-  string_vector <- unlist(as.vector(x[text_col]))
+  string_vector <- x[[text_col]]
+
 
   if (word == TRUE) {
   x$wordcount = get_wordcount(string_vector)
