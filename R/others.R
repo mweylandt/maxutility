@@ -8,20 +8,24 @@
 #' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
 #' add_textcounts(testdf, text=text)
 
+text_col= "a"
+
+x <- df
 
 add_textcounts <- function (x, text_col, word = TRUE, char = TRUE) {
   require(dplyr)
   require(stringr)
-  column_name = enquo(text_col)
+
+  string_vector <- unlist(as.vector(x[text_col]))
 
   if (word == TRUE) {
-  x <-  x %>%
-  mutate(wordcount = str_count(string= !!column_name, pattern = "\\W+"))
+  x$wordcount = get_wordcount(string_vector)
   } else {}
 
   if (char == TRUE) {
-  x <-  x %>%
-      mutate(charcount = str_count(string= !!column_name, pattern = ""))
+
+    x$charcount = str_count(string = string_vector, pattern = "")
+
   } else {}
 
   return(x)
@@ -33,24 +37,27 @@ add_textcounts <- function (x, text_col, word = TRUE, char = TRUE) {
 #' @name get_wordcount
 #' @param text_col text column to be counted
 #' @examples
-#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
+#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen from time to time"))
 #' get_wordcount(testdf, text=text)
 
 
-get_wordcount <- function(x, text_col) {
+get_wordcount <- function(x) {
   require(dplyr)
-  require(stringr)
-  column_name = enquo(text_col)
+  require(quanteda)
+
+  if (!is.vector(x)) {
+    x <- as.vector(x)
+    warning("input not a vector. Trying to coerce")
+  }
+
+  toks <-  quanteda::tokens(x, remove_punct = TRUE,
+                         remove_symbols = TRUE,
+                         remove_numbers = TRUE)
+  ntoken(toks) #10
 
 
-    wordcount <- x %>%
-      summarize(wordcount = str_count( string= !!column_name, pattern = "\\W+")) %>%
-      pull(wordcount)
 
 
-
-
-  return(wordcount)
 }
 
 
