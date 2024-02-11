@@ -5,8 +5,8 @@
 #' @param word add wordcount
 #' @param char add character count
 #' @examples
-#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
-#' add_textcounts(testdf, text=text)
+#' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen from time to time"))
+#' add_textcounts(testdf, text_col="text")
 
 text_col= "a"
 
@@ -38,7 +38,7 @@ add_textcounts <- function (x, text_col, word = TRUE, char = TRUE) {
 #' @param text_col text column to be counted
 #' @examples
 #' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen from time to time"))
-#' get_wordcount(testdf, text=text)
+#' get_wordcount(testdf$text)
 
 
 get_wordcount <- function(x) {
@@ -67,7 +67,7 @@ get_wordcount <- function(x) {
 #' @param text_col text column to be counted
 #' @examples
 #' testdf <- data.frame(author=c("me", "you"), text = c("democracy is so nice", "democratic movements happen en la realidad"))
-#' get_wordcount(testdf, text=text)
+#' get_wordcount(testdf$text)
 
 get_charcount <- function(x, text_col) {
   require(dplyr)
